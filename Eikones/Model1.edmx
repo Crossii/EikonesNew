@@ -1,0 +1,709 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="schuldbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tfaecher">
+          <Key>
+            <PropertyRef Name="F_ID" />
+          </Key>
+          <Property Name="F_ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="F_Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tklassen">
+          <Key>
+            <PropertyRef Name="K_ID" />
+          </Key>
+          <Property Name="K_ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="K_Langname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="K_Stammraum" Type="varchar" MaxLength="10" />
+          <Property Name="K_KV" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="tlehrer">
+          <Key>
+            <PropertyRef Name="L_ID" />
+          </Key>
+          <Property Name="L_ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="L_Zuname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="L_Vorname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="L_Email" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tpruefungen">
+          <Key>
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="P_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="P_Schueler" Type="int" Nullable="false" />
+          <Property Name="P_Lehrer" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="P_Fach" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="P_Note" Type="int" />
+          <Property Name="P_Datum" Type="datetime" Precision="0" />
+          <Property Name="P_Vorgaenger" Type="int" />
+        </EntityType>
+        <EntityType Name="traeume">
+          <Key>
+            <PropertyRef Name="R_ID" />
+          </Key>
+          <Property Name="R_ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="R_Art" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="R_Kapaz" Type="int" />
+        </EntityType>
+        <EntityType Name="tschueler">
+          <Key>
+            <PropertyRef Name="S_ID" />
+          </Key>
+          <Property Name="S_ID" Type="int" Nullable="false" />
+          <Property Name="S_Zuname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="S_Vorname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="S_Email" Type="varchar" MaxLength="200" />
+          <Property Name="S_Gebdat" Type="datetime" Precision="0" />
+          <Property Name="S_Geschl" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="S_Klasse" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tstunden">
+          <Key>
+            <PropertyRef Name="ST_Nr" />
+          </Key>
+          <Property Name="ST_Nr" Type="int" Nullable="false" />
+          <Property Name="ST_Von" Type="time" Precision="0" Nullable="false" />
+          <Property Name="ST_Bis" Type="time" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tunterricht">
+          <Key>
+            <PropertyRef Name="U_ID" />
+          </Key>
+          <Property Name="U_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="U_Klasse" Type="varchar" MaxLength="10" />
+          <Property Name="U_Lehrer" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="U_Fach" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="U_Raum" Type="varchar" MaxLength="10" />
+          <Property Name="U_Tag" Type="int" Nullable="false" />
+          <Property Name="U_Stunde" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_tKlassen_tLehrer1">
+          <End Role="tlehrer" Type="Self.tlehrer" Multiplicity="0..1" />
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tlehrer">
+              <PropertyRef Name="L_ID" />
+            </Principal>
+            <Dependent Role="tklassen">
+              <PropertyRef Name="K_KV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tKlassen_tRaeume1">
+          <End Role="traeume" Type="Self.traeume" Multiplicity="0..1" />
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="traeume">
+              <PropertyRef Name="R_ID" />
+            </Principal>
+            <Dependent Role="tklassen">
+              <PropertyRef Name="K_Stammraum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tPruefungen_tFaecher1">
+          <End Role="tfaecher" Type="Self.tfaecher" Multiplicity="1" />
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tfaecher">
+              <PropertyRef Name="F_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen">
+              <PropertyRef Name="P_Fach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tPruefungen_tLehrer1">
+          <End Role="tlehrer" Type="Self.tlehrer" Multiplicity="1" />
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tlehrer">
+              <PropertyRef Name="L_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen">
+              <PropertyRef Name="P_Lehrer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tPruefungen_tPruefungen1">
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="0..1" />
+          <End Role="tpruefungen1" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tpruefungen">
+              <PropertyRef Name="P_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen1">
+              <PropertyRef Name="P_Vorgaenger" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tPruefungen_tSchueler1">
+          <End Role="tschueler" Type="Self.tschueler" Multiplicity="1" />
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tschueler">
+              <PropertyRef Name="S_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen">
+              <PropertyRef Name="P_Schueler" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tSchueler_tKlassen1">
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="1" />
+          <End Role="tschueler" Type="Self.tschueler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tklassen">
+              <PropertyRef Name="K_ID" />
+            </Principal>
+            <Dependent Role="tschueler">
+              <PropertyRef Name="S_Klasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tFaecher1">
+          <End Role="tfaecher" Type="Self.tfaecher" Multiplicity="1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tfaecher">
+              <PropertyRef Name="F_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Fach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tKlassen1">
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="0..1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tklassen">
+              <PropertyRef Name="K_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Klasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tLehrer1">
+          <End Role="tlehrer" Type="Self.tlehrer" Multiplicity="1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tlehrer">
+              <PropertyRef Name="L_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Lehrer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tRaeume1">
+          <End Role="traeume" Type="Self.traeume" Multiplicity="0..1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="traeume">
+              <PropertyRef Name="R_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Raum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tStunden1">
+          <End Role="tstunden" Type="Self.tstunden" Multiplicity="1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tstunden">
+              <PropertyRef Name="ST_Nr" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Stunde" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="schuldbModelStoreContainer">
+          <EntitySet Name="tfaecher" EntityType="Self.tfaecher" Schema="schuldb" store:Type="Tables" />
+          <EntitySet Name="tklassen" EntityType="Self.tklassen" Schema="schuldb" store:Type="Tables" />
+          <EntitySet Name="tlehrer" EntityType="Self.tlehrer" Schema="schuldb" store:Type="Tables" />
+          <EntitySet Name="tpruefungen" EntityType="Self.tpruefungen" Schema="schuldb" store:Type="Tables" />
+          <EntitySet Name="traeume" EntityType="Self.traeume" Schema="schuldb" store:Type="Tables" />
+          <EntitySet Name="tschueler" EntityType="Self.tschueler" Schema="schuldb" store:Type="Tables" />
+          <EntitySet Name="tstunden" EntityType="Self.tstunden" Schema="schuldb" store:Type="Tables" />
+          <EntitySet Name="tunterricht" EntityType="Self.tunterricht" Schema="schuldb" store:Type="Tables" />
+          <AssociationSet Name="fk_tKlassen_tLehrer1" Association="Self.fk_tKlassen_tLehrer1">
+            <End Role="tlehrer" EntitySet="tlehrer" />
+            <End Role="tklassen" EntitySet="tklassen" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tKlassen_tRaeume1" Association="Self.fk_tKlassen_tRaeume1">
+            <End Role="traeume" EntitySet="traeume" />
+            <End Role="tklassen" EntitySet="tklassen" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tPruefungen_tFaecher1" Association="Self.fk_tPruefungen_tFaecher1">
+            <End Role="tfaecher" EntitySet="tfaecher" />
+            <End Role="tpruefungen" EntitySet="tpruefungen" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tPruefungen_tLehrer1" Association="Self.fk_tPruefungen_tLehrer1">
+            <End Role="tlehrer" EntitySet="tlehrer" />
+            <End Role="tpruefungen" EntitySet="tpruefungen" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tPruefungen_tPruefungen1" Association="Self.fk_tPruefungen_tPruefungen1">
+            <End Role="tpruefungen" EntitySet="tpruefungen" />
+            <End Role="tpruefungen1" EntitySet="tpruefungen" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tPruefungen_tSchueler1" Association="Self.fk_tPruefungen_tSchueler1">
+            <End Role="tschueler" EntitySet="tschueler" />
+            <End Role="tpruefungen" EntitySet="tpruefungen" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tSchueler_tKlassen1" Association="Self.fk_tSchueler_tKlassen1">
+            <End Role="tklassen" EntitySet="tklassen" />
+            <End Role="tschueler" EntitySet="tschueler" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tFaecher1" Association="Self.fk_tUnterricht_tFaecher1">
+            <End Role="tfaecher" EntitySet="tfaecher" />
+            <End Role="tunterricht" EntitySet="tunterricht" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tKlassen1" Association="Self.fk_tUnterricht_tKlassen1">
+            <End Role="tklassen" EntitySet="tklassen" />
+            <End Role="tunterricht" EntitySet="tunterricht" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tLehrer1" Association="Self.fk_tUnterricht_tLehrer1">
+            <End Role="tlehrer" EntitySet="tlehrer" />
+            <End Role="tunterricht" EntitySet="tunterricht" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tRaeume1" Association="Self.fk_tUnterricht_tRaeume1">
+            <End Role="traeume" EntitySet="traeume" />
+            <End Role="tunterricht" EntitySet="tunterricht" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tStunden1" Association="Self.fk_tUnterricht_tStunden1">
+            <End Role="tstunden" EntitySet="tstunden" />
+            <End Role="tunterricht" EntitySet="tunterricht" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="schuldbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tfaecher">
+          <Key>
+            <PropertyRef Name="F_ID" />
+          </Key>
+          <Property Name="F_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="F_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tpruefungens" Relationship="Self.fk_tPruefungen_tFaecher1" FromRole="tfaecher" ToRole="tpruefungen" />
+          <NavigationProperty Name="tunterrichts" Relationship="Self.fk_tUnterricht_tFaecher1" FromRole="tfaecher" ToRole="tunterricht" />
+        </EntityType>
+        <EntityType Name="tklassen">
+          <Key>
+            <PropertyRef Name="K_ID" />
+          </Key>
+          <Property Name="K_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="K_Langname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="K_Stammraum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="K_KV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tlehrer" Relationship="Self.fk_tKlassen_tLehrer1" FromRole="tklassen" ToRole="tlehrer" />
+          <NavigationProperty Name="traeume" Relationship="Self.fk_tKlassen_tRaeume1" FromRole="tklassen" ToRole="traeume" />
+          <NavigationProperty Name="tschuelers" Relationship="Self.fk_tSchueler_tKlassen1" FromRole="tklassen" ToRole="tschueler" />
+          <NavigationProperty Name="tunterrichts" Relationship="Self.fk_tUnterricht_tKlassen1" FromRole="tklassen" ToRole="tunterricht" />
+        </EntityType>
+        <EntityType Name="tlehrer">
+          <Key>
+            <PropertyRef Name="L_ID" />
+          </Key>
+          <Property Name="L_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="L_Zuname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="L_Vorname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="L_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tklassens" Relationship="Self.fk_tKlassen_tLehrer1" FromRole="tlehrer" ToRole="tklassen" />
+          <NavigationProperty Name="tpruefungens" Relationship="Self.fk_tPruefungen_tLehrer1" FromRole="tlehrer" ToRole="tpruefungen" />
+          <NavigationProperty Name="tunterrichts" Relationship="Self.fk_tUnterricht_tLehrer1" FromRole="tlehrer" ToRole="tunterricht" />
+        </EntityType>
+        <EntityType Name="tpruefungen">
+          <Key>
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="P_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="P_Schueler" Type="Int32" Nullable="false" />
+          <Property Name="P_Lehrer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="P_Fach" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="P_Note" Type="Int32" />
+          <Property Name="P_Datum" Type="DateTime" />
+          <Property Name="P_Vorgaenger" Type="Int32" />
+          <NavigationProperty Name="tfaecher" Relationship="Self.fk_tPruefungen_tFaecher1" FromRole="tpruefungen" ToRole="tfaecher" />
+          <NavigationProperty Name="tlehrer" Relationship="Self.fk_tPruefungen_tLehrer1" FromRole="tpruefungen" ToRole="tlehrer" />
+          <NavigationProperty Name="tpruefungen1" Relationship="Self.fk_tPruefungen_tPruefungen1" FromRole="tpruefungen" ToRole="tpruefungen1" />
+          <NavigationProperty Name="tpruefungen2" Relationship="Self.fk_tPruefungen_tPruefungen1" FromRole="tpruefungen1" ToRole="tpruefungen" />
+          <NavigationProperty Name="tschueler" Relationship="Self.fk_tPruefungen_tSchueler1" FromRole="tpruefungen" ToRole="tschueler" />
+        </EntityType>
+        <EntityType Name="traeume">
+          <Key>
+            <PropertyRef Name="R_ID" />
+          </Key>
+          <Property Name="R_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="R_Art" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="R_Kapaz" Type="Int32" />
+          <NavigationProperty Name="tklassens" Relationship="Self.fk_tKlassen_tRaeume1" FromRole="traeume" ToRole="tklassen" />
+          <NavigationProperty Name="tunterrichts" Relationship="Self.fk_tUnterricht_tRaeume1" FromRole="traeume" ToRole="tunterricht" />
+        </EntityType>
+        <EntityType Name="tschueler">
+          <Key>
+            <PropertyRef Name="S_ID" />
+          </Key>
+          <Property Name="S_ID" Type="Int32" Nullable="false" />
+          <Property Name="S_Zuname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="S_Vorname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="S_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="S_Gebdat" Type="DateTime" />
+          <Property Name="S_Geschl" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="S_Klasse" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tklassen" Relationship="Self.fk_tSchueler_tKlassen1" FromRole="tschueler" ToRole="tklassen" />
+          <NavigationProperty Name="tpruefungens" Relationship="Self.fk_tPruefungen_tSchueler1" FromRole="tschueler" ToRole="tpruefungen" />
+        </EntityType>
+        <EntityType Name="tstunden">
+          <Key>
+            <PropertyRef Name="ST_Nr" />
+          </Key>
+          <Property Name="ST_Nr" Type="Int32" Nullable="false" />
+          <Property Name="ST_Von" Type="Time" Nullable="false" />
+          <Property Name="ST_Bis" Type="Time" Nullable="false" />
+          <NavigationProperty Name="tunterrichts" Relationship="Self.fk_tUnterricht_tStunden1" FromRole="tstunden" ToRole="tunterricht" />
+        </EntityType>
+        <EntityType Name="tunterricht">
+          <Key>
+            <PropertyRef Name="U_ID" />
+          </Key>
+          <Property Name="U_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="U_Klasse" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="U_Lehrer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="U_Fach" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="U_Raum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="U_Tag" Type="Int32" Nullable="false" />
+          <Property Name="U_Stunde" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tfaecher" Relationship="Self.fk_tUnterricht_tFaecher1" FromRole="tunterricht" ToRole="tfaecher" />
+          <NavigationProperty Name="tklassen" Relationship="Self.fk_tUnterricht_tKlassen1" FromRole="tunterricht" ToRole="tklassen" />
+          <NavigationProperty Name="tlehrer" Relationship="Self.fk_tUnterricht_tLehrer1" FromRole="tunterricht" ToRole="tlehrer" />
+          <NavigationProperty Name="traeume" Relationship="Self.fk_tUnterricht_tRaeume1" FromRole="tunterricht" ToRole="traeume" />
+          <NavigationProperty Name="tstunden" Relationship="Self.fk_tUnterricht_tStunden1" FromRole="tunterricht" ToRole="tstunden" />
+        </EntityType>
+        <Association Name="fk_tPruefungen_tFaecher1">
+          <End Role="tfaecher" Type="Self.tfaecher" Multiplicity="1" />
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tfaecher">
+              <PropertyRef Name="F_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen">
+              <PropertyRef Name="P_Fach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tFaecher1">
+          <End Role="tfaecher" Type="Self.tfaecher" Multiplicity="1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tfaecher">
+              <PropertyRef Name="F_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Fach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tKlassen_tLehrer1">
+          <End Role="tlehrer" Type="Self.tlehrer" Multiplicity="0..1" />
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tlehrer">
+              <PropertyRef Name="L_ID" />
+            </Principal>
+            <Dependent Role="tklassen">
+              <PropertyRef Name="K_KV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tKlassen_tRaeume1">
+          <End Role="traeume" Type="Self.traeume" Multiplicity="0..1" />
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="traeume">
+              <PropertyRef Name="R_ID" />
+            </Principal>
+            <Dependent Role="tklassen">
+              <PropertyRef Name="K_Stammraum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tSchueler_tKlassen1">
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="1" />
+          <End Role="tschueler" Type="Self.tschueler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tklassen">
+              <PropertyRef Name="K_ID" />
+            </Principal>
+            <Dependent Role="tschueler">
+              <PropertyRef Name="S_Klasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tKlassen1">
+          <End Role="tklassen" Type="Self.tklassen" Multiplicity="0..1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tklassen">
+              <PropertyRef Name="K_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Klasse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tPruefungen_tLehrer1">
+          <End Role="tlehrer" Type="Self.tlehrer" Multiplicity="1" />
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tlehrer">
+              <PropertyRef Name="L_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen">
+              <PropertyRef Name="P_Lehrer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tLehrer1">
+          <End Role="tlehrer" Type="Self.tlehrer" Multiplicity="1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tlehrer">
+              <PropertyRef Name="L_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Lehrer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tPruefungen_tPruefungen1">
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="0..1" />
+          <End Role="tpruefungen1" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tpruefungen">
+              <PropertyRef Name="P_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen1">
+              <PropertyRef Name="P_Vorgaenger" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tPruefungen_tSchueler1">
+          <End Role="tschueler" Type="Self.tschueler" Multiplicity="1" />
+          <End Role="tpruefungen" Type="Self.tpruefungen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tschueler">
+              <PropertyRef Name="S_ID" />
+            </Principal>
+            <Dependent Role="tpruefungen">
+              <PropertyRef Name="P_Schueler" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tRaeume1">
+          <End Role="traeume" Type="Self.traeume" Multiplicity="0..1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="traeume">
+              <PropertyRef Name="R_ID" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Raum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tUnterricht_tStunden1">
+          <End Role="tstunden" Type="Self.tstunden" Multiplicity="1" />
+          <End Role="tunterricht" Type="Self.tunterricht" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tstunden">
+              <PropertyRef Name="ST_Nr" />
+            </Principal>
+            <Dependent Role="tunterricht">
+              <PropertyRef Name="U_Stunde" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="schuldbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tfaechers" EntityType="Self.tfaecher" />
+          <EntitySet Name="tklassens" EntityType="Self.tklassen" />
+          <EntitySet Name="tlehrers" EntityType="Self.tlehrer" />
+          <EntitySet Name="tpruefungens" EntityType="Self.tpruefungen" />
+          <EntitySet Name="traeumes" EntityType="Self.traeume" />
+          <EntitySet Name="tschuelers" EntityType="Self.tschueler" />
+          <EntitySet Name="tstundens" EntityType="Self.tstunden" />
+          <EntitySet Name="tunterrichts" EntityType="Self.tunterricht" />
+          <AssociationSet Name="fk_tPruefungen_tFaecher1" Association="Self.fk_tPruefungen_tFaecher1">
+            <End Role="tfaecher" EntitySet="tfaechers" />
+            <End Role="tpruefungen" EntitySet="tpruefungens" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tFaecher1" Association="Self.fk_tUnterricht_tFaecher1">
+            <End Role="tfaecher" EntitySet="tfaechers" />
+            <End Role="tunterricht" EntitySet="tunterrichts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tKlassen_tLehrer1" Association="Self.fk_tKlassen_tLehrer1">
+            <End Role="tlehrer" EntitySet="tlehrers" />
+            <End Role="tklassen" EntitySet="tklassens" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tKlassen_tRaeume1" Association="Self.fk_tKlassen_tRaeume1">
+            <End Role="traeume" EntitySet="traeumes" />
+            <End Role="tklassen" EntitySet="tklassens" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tSchueler_tKlassen1" Association="Self.fk_tSchueler_tKlassen1">
+            <End Role="tklassen" EntitySet="tklassens" />
+            <End Role="tschueler" EntitySet="tschuelers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tKlassen1" Association="Self.fk_tUnterricht_tKlassen1">
+            <End Role="tklassen" EntitySet="tklassens" />
+            <End Role="tunterricht" EntitySet="tunterrichts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tPruefungen_tLehrer1" Association="Self.fk_tPruefungen_tLehrer1">
+            <End Role="tlehrer" EntitySet="tlehrers" />
+            <End Role="tpruefungen" EntitySet="tpruefungens" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tLehrer1" Association="Self.fk_tUnterricht_tLehrer1">
+            <End Role="tlehrer" EntitySet="tlehrers" />
+            <End Role="tunterricht" EntitySet="tunterrichts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tPruefungen_tPruefungen1" Association="Self.fk_tPruefungen_tPruefungen1">
+            <End Role="tpruefungen" EntitySet="tpruefungens" />
+            <End Role="tpruefungen1" EntitySet="tpruefungens" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tPruefungen_tSchueler1" Association="Self.fk_tPruefungen_tSchueler1">
+            <End Role="tschueler" EntitySet="tschuelers" />
+            <End Role="tpruefungen" EntitySet="tpruefungens" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tRaeume1" Association="Self.fk_tUnterricht_tRaeume1">
+            <End Role="traeume" EntitySet="traeumes" />
+            <End Role="tunterricht" EntitySet="tunterrichts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tUnterricht_tStunden1" Association="Self.fk_tUnterricht_tStunden1">
+            <End Role="tstunden" EntitySet="tstundens" />
+            <End Role="tunterricht" EntitySet="tunterrichts" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="schuldbModelStoreContainer" CdmEntityContainer="schuldbEntities">
+          <EntitySetMapping Name="tfaechers">
+            <EntityTypeMapping TypeName="schuldbModel.tfaecher">
+              <MappingFragment StoreEntitySet="tfaecher">
+                <ScalarProperty Name="F_ID" ColumnName="F_ID" />
+                <ScalarProperty Name="F_Name" ColumnName="F_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tklassens">
+            <EntityTypeMapping TypeName="schuldbModel.tklassen">
+              <MappingFragment StoreEntitySet="tklassen">
+                <ScalarProperty Name="K_ID" ColumnName="K_ID" />
+                <ScalarProperty Name="K_Langname" ColumnName="K_Langname" />
+                <ScalarProperty Name="K_Stammraum" ColumnName="K_Stammraum" />
+                <ScalarProperty Name="K_KV" ColumnName="K_KV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tlehrers">
+            <EntityTypeMapping TypeName="schuldbModel.tlehrer">
+              <MappingFragment StoreEntitySet="tlehrer">
+                <ScalarProperty Name="L_ID" ColumnName="L_ID" />
+                <ScalarProperty Name="L_Zuname" ColumnName="L_Zuname" />
+                <ScalarProperty Name="L_Vorname" ColumnName="L_Vorname" />
+                <ScalarProperty Name="L_Email" ColumnName="L_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tpruefungens">
+            <EntityTypeMapping TypeName="schuldbModel.tpruefungen">
+              <MappingFragment StoreEntitySet="tpruefungen">
+                <ScalarProperty Name="P_ID" ColumnName="P_ID" />
+                <ScalarProperty Name="P_Schueler" ColumnName="P_Schueler" />
+                <ScalarProperty Name="P_Lehrer" ColumnName="P_Lehrer" />
+                <ScalarProperty Name="P_Fach" ColumnName="P_Fach" />
+                <ScalarProperty Name="P_Note" ColumnName="P_Note" />
+                <ScalarProperty Name="P_Datum" ColumnName="P_Datum" />
+                <ScalarProperty Name="P_Vorgaenger" ColumnName="P_Vorgaenger" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="traeumes">
+            <EntityTypeMapping TypeName="schuldbModel.traeume">
+              <MappingFragment StoreEntitySet="traeume">
+                <ScalarProperty Name="R_ID" ColumnName="R_ID" />
+                <ScalarProperty Name="R_Art" ColumnName="R_Art" />
+                <ScalarProperty Name="R_Kapaz" ColumnName="R_Kapaz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tschuelers">
+            <EntityTypeMapping TypeName="schuldbModel.tschueler">
+              <MappingFragment StoreEntitySet="tschueler">
+                <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+                <ScalarProperty Name="S_Zuname" ColumnName="S_Zuname" />
+                <ScalarProperty Name="S_Vorname" ColumnName="S_Vorname" />
+                <ScalarProperty Name="S_Email" ColumnName="S_Email" />
+                <ScalarProperty Name="S_Gebdat" ColumnName="S_Gebdat" />
+                <ScalarProperty Name="S_Geschl" ColumnName="S_Geschl" />
+                <ScalarProperty Name="S_Klasse" ColumnName="S_Klasse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tstundens">
+            <EntityTypeMapping TypeName="schuldbModel.tstunden">
+              <MappingFragment StoreEntitySet="tstunden">
+                <ScalarProperty Name="ST_Nr" ColumnName="ST_Nr" />
+                <ScalarProperty Name="ST_Von" ColumnName="ST_Von" />
+                <ScalarProperty Name="ST_Bis" ColumnName="ST_Bis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tunterrichts">
+            <EntityTypeMapping TypeName="schuldbModel.tunterricht">
+              <MappingFragment StoreEntitySet="tunterricht">
+                <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+                <ScalarProperty Name="U_Klasse" ColumnName="U_Klasse" />
+                <ScalarProperty Name="U_Lehrer" ColumnName="U_Lehrer" />
+                <ScalarProperty Name="U_Fach" ColumnName="U_Fach" />
+                <ScalarProperty Name="U_Raum" ColumnName="U_Raum" />
+                <ScalarProperty Name="U_Tag" ColumnName="U_Tag" />
+                <ScalarProperty Name="U_Stunde" ColumnName="U_Stunde" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

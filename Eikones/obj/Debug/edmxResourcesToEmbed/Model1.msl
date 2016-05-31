@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="schuldbModelStoreContainer" CdmEntityContainer="schuldbEntities">
+    <EntitySetMapping Name="tfaechers">
+      <EntityTypeMapping TypeName="schuldbModel.tfaecher">
+        <MappingFragment StoreEntitySet="tfaecher">
+          <ScalarProperty Name="F_ID" ColumnName="F_ID" />
+          <ScalarProperty Name="F_Name" ColumnName="F_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tklassens">
+      <EntityTypeMapping TypeName="schuldbModel.tklassen">
+        <MappingFragment StoreEntitySet="tklassen">
+          <ScalarProperty Name="K_ID" ColumnName="K_ID" />
+          <ScalarProperty Name="K_Langname" ColumnName="K_Langname" />
+          <ScalarProperty Name="K_Stammraum" ColumnName="K_Stammraum" />
+          <ScalarProperty Name="K_KV" ColumnName="K_KV" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tlehrers">
+      <EntityTypeMapping TypeName="schuldbModel.tlehrer">
+        <MappingFragment StoreEntitySet="tlehrer">
+          <ScalarProperty Name="L_ID" ColumnName="L_ID" />
+          <ScalarProperty Name="L_Zuname" ColumnName="L_Zuname" />
+          <ScalarProperty Name="L_Vorname" ColumnName="L_Vorname" />
+          <ScalarProperty Name="L_Email" ColumnName="L_Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tpruefungens">
+      <EntityTypeMapping TypeName="schuldbModel.tpruefungen">
+        <MappingFragment StoreEntitySet="tpruefungen">
+          <ScalarProperty Name="P_ID" ColumnName="P_ID" />
+          <ScalarProperty Name="P_Schueler" ColumnName="P_Schueler" />
+          <ScalarProperty Name="P_Lehrer" ColumnName="P_Lehrer" />
+          <ScalarProperty Name="P_Fach" ColumnName="P_Fach" />
+          <ScalarProperty Name="P_Note" ColumnName="P_Note" />
+          <ScalarProperty Name="P_Datum" ColumnName="P_Datum" />
+          <ScalarProperty Name="P_Vorgaenger" ColumnName="P_Vorgaenger" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="traeumes">
+      <EntityTypeMapping TypeName="schuldbModel.traeume">
+        <MappingFragment StoreEntitySet="traeume">
+          <ScalarProperty Name="R_ID" ColumnName="R_ID" />
+          <ScalarProperty Name="R_Art" ColumnName="R_Art" />
+          <ScalarProperty Name="R_Kapaz" ColumnName="R_Kapaz" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tschuelers">
+      <EntityTypeMapping TypeName="schuldbModel.tschueler">
+        <MappingFragment StoreEntitySet="tschueler">
+          <ScalarProperty Name="S_ID" ColumnName="S_ID" />
+          <ScalarProperty Name="S_Zuname" ColumnName="S_Zuname" />
+          <ScalarProperty Name="S_Vorname" ColumnName="S_Vorname" />
+          <ScalarProperty Name="S_Email" ColumnName="S_Email" />
+          <ScalarProperty Name="S_Gebdat" ColumnName="S_Gebdat" />
+          <ScalarProperty Name="S_Geschl" ColumnName="S_Geschl" />
+          <ScalarProperty Name="S_Klasse" ColumnName="S_Klasse" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tstundens">
+      <EntityTypeMapping TypeName="schuldbModel.tstunden">
+        <MappingFragment StoreEntitySet="tstunden">
+          <ScalarProperty Name="ST_Nr" ColumnName="ST_Nr" />
+          <ScalarProperty Name="ST_Von" ColumnName="ST_Von" />
+          <ScalarProperty Name="ST_Bis" ColumnName="ST_Bis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tunterrichts">
+      <EntityTypeMapping TypeName="schuldbModel.tunterricht">
+        <MappingFragment StoreEntitySet="tunterricht">
+          <ScalarProperty Name="U_ID" ColumnName="U_ID" />
+          <ScalarProperty Name="U_Klasse" ColumnName="U_Klasse" />
+          <ScalarProperty Name="U_Lehrer" ColumnName="U_Lehrer" />
+          <ScalarProperty Name="U_Fach" ColumnName="U_Fach" />
+          <ScalarProperty Name="U_Raum" ColumnName="U_Raum" />
+          <ScalarProperty Name="U_Tag" ColumnName="U_Tag" />
+          <ScalarProperty Name="U_Stunde" ColumnName="U_Stunde" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
