@@ -14,20 +14,11 @@ namespace Eikones
     
     public partial class tschueler
     {
-        public tschueler()
-        {
-            this.tpruefungens = new HashSet<tpruefungen>();
-        }
-    
-        public int S_ID { get; set; }
-        public string S_Zuname { get; set; }
+        public string S_ID { get; set; }
         public string S_Vorname { get; set; }
-        public string S_Email { get; set; }
-        public Nullable<System.DateTime> S_Gebdat { get; set; }
-        public string S_Geschl { get; set; }
+        public string S_Nachname { get; set; }
         public string S_Klasse { get; set; }
     
         public virtual tklassen tklassen { get; set; }
-        public virtual ICollection<tpruefungen> tpruefungens { get; set; }
     }
 }

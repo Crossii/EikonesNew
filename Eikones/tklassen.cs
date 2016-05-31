@@ -17,17 +17,10 @@ namespace Eikones
         public tklassen()
         {
             this.tschuelers = new HashSet<tschueler>();
-            this.tunterrichts = new HashSet<tunterricht>();
         }
     
         public string K_ID { get; set; }
-        public string K_Langname { get; set; }
-        public string K_Stammraum { get; set; }
-        public string K_KV { get; set; }
     
-        public virtual tlehrer tlehrer { get; set; }
-        public virtual traeume traeume { get; set; }
         public virtual ICollection<tschueler> tschuelers { get; set; }
-        public virtual ICollection<tunterricht> tunterrichts { get; set; }
     }
 }
