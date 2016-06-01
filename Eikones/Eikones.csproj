@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auswertung.aspx" />
+    <Content Include="Eikon.png" />
     <Content Include="EikonesDatenbank.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EikonesDatenbank.edmx</DependentUpon>
@@ -130,7 +131,6 @@
     </Content>
     <Content Include="Start.aspx" />
     <Content Include="Test.aspx" />
-    <Content Include="Eikon.png" />
     <Content Include="Vorlage.Master" />
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
