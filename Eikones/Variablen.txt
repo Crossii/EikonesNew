@@ -1,0 +1,3 @@
+﻿Hier alle benötigten session variablen reinschreiben
+
+Klasse : Session["Klasse"]

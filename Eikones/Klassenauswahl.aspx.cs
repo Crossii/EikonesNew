@@ -9,6 +9,7 @@ namespace Eikones
 {
     public partial class Klassenauswahl : System.Web.UI.Page
     {
+        schuldbEntities db = new schuldbEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -16,6 +17,7 @@ namespace Eikones
 
         protected void btAuswahl_Click(object sender, EventArgs e)
         {
+            
             Response.Redirect("Klassenansicht.aspx");
         }
     }
