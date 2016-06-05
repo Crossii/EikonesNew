@@ -36,7 +36,7 @@ namespace Eikones
                 name.CssClass = "StudentNameCell";
 
                 if (File.Exists(@"..\Bilder\" + s.S_ID + ".png"))
-                    pic.Text = "<img src = ''/>";
+                    pic.Text = @"<img src = '..\Bilder\" + s.S_ID + ".png'/>";
                 else
                     pic.Text = "<img src = 'default.png'/>";
 

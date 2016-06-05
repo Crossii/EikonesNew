@@ -1,3 +1,4 @@
 ﻿Hier alle benötigten session variablen reinschreiben
 
-Klasse : Session["Klasse"]
+Klasse : Session["Klasse"] as tKlasse
+Liste der abfragen: Session["abfragen"] as List<Testabfrage>
