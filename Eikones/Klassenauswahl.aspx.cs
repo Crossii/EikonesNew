@@ -17,9 +17,11 @@ namespace Eikones
 
         protected void btAuswahl_Click(object sender, EventArgs e)
         {
-            Session["Klasse"] = (from k in db.tklassens.ToList()
-                                 where k.K_ID == ddKlassen.SelectedValue
-                                 select k) as tklassen;
+            string kid = ddKlassen.SelectedValue.ToString();
+            tklassen klasse = (from k in db.tklassens.ToList()
+                               where k.K_ID.Equals(kid)
+                               select k).First();
+            Session["Klasse"] = klasse;
             Response.Redirect("Klassenansicht.aspx");
             
         }

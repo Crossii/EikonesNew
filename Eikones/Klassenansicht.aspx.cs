@@ -12,13 +12,17 @@ namespace Eikones
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            tklassen klasse = Session["3BHIF"] as tklassen;
+            tklassen klasse = Session["Klasse"] as tklassen;
             List<tschueler> schueler = klasse.tschuelers.ToList();
             int col = 0;
             int maxCol = 4;
+            TableRow PicRow = new TableRow();
+            TableRow NameRow = new TableRow();
+            tbSchueler.Rows.Add(PicRow);
+            tbSchueler.Rows.Add(NameRow);
             foreach (tschueler s in schueler)
             {
-                TableRow PicRow, NameRow;
+                
                 //zeilenverwaltung
                 if (col == maxCol)
                 {
@@ -38,9 +42,9 @@ namespace Eikones
                     pic.Text = @"<img src = '..\Bilder\" + s.S_ID + ".png'/>";
                 else
                     pic.Text = "<img src = 'default.png'/>";
-
                 name.Text = s.S_ID;
-
+                PicRow.Cells.Add(pic);
+                NameRow.Cells.Add(name);
                 col++;
             }
         }
