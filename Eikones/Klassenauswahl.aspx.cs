@@ -17,7 +17,7 @@ namespace Eikones
 
         protected void btAuswahl_Click(object sender, EventArgs e)
         {
-            
+            Session["Klasse"] = ddKlassen.SelectedValue;
             Response.Redirect("Klassenansicht.aspx");
         }
 

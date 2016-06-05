@@ -13,7 +13,9 @@ namespace Eikones
         schuldbEntities db = new schuldbEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
-            tklassen klasse = Session["Klasse"] as tklassen;
+            tklassen klasse = (from k in db.tklassens.ToList()
+                               where k.K_ID == "3BHIF"
+                               select k) as tklassen;
             List<tschueler> schueler = klasse.tschuelers.ToList();
             int col = 0;
             int maxCol = 4;
@@ -21,7 +23,7 @@ namespace Eikones
             {
                 TableRow PicRow, NameRow;
                 //zeilenverwaltung
-                if (col == maxCol) 
+                if (col == maxCol)
                 {
                     maxCol = 0;
                     PicRow = new TableRow();
@@ -30,7 +32,7 @@ namespace Eikones
                     tbSchueler.Rows.Add(NameRow);
                 }
                 //Zellen initialisieren
-                TableCell pic = new TableCell(); 
+                TableCell pic = new TableCell();
                 TableCell name = new TableCell();
                 pic.CssClass = "PictureCell";
                 name.CssClass = "StudentNameCell";
