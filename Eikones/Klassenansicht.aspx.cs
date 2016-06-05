@@ -13,9 +13,7 @@ namespace Eikones
         schuldbEntities db = new schuldbEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
-            tklassen klasse = (from k in db.tklassens.ToList()
-                               where k.K_ID == "3BHIF"
-                               select k) as tklassen;
+            tklassen klasse = Session["3BHIF"] as tklassen;
             List<tschueler> schueler = klasse.tschuelers.ToList();
             int col = 0;
             int maxCol = 4;
