@@ -12,7 +12,7 @@ namespace Eikones
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            tklassen klasse = ;
+            tklassen klasse = Session["3BHIF"] as tklassen;
             List<tschueler> schueler = klasse.tschuelers.ToList();
             int col = 0;
             int maxCol = 4;
