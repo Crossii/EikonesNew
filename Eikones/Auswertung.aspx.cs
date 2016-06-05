@@ -9,7 +9,7 @@ namespace Eikones
 {
     public partial class Auswertung : System.Web.UI.Page
     {
-        schuldbEntities s = new schuldbEntities();
+        eikonesEntities s = new eikonesEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
             tklassen klasse = Session["Klasse"] as tklassen;

@@ -9,7 +9,7 @@ namespace Eikones
 {
     public partial class Klassenauswahl : System.Web.UI.Page
     {
-        schuldbEntities db = new schuldbEntities();
+        eikonesEntities db = new eikonesEntities();
         protected void Page_Load(object sender, EventArgs e)
         {
             
