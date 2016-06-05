@@ -102,7 +102,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Auswertung.aspx" />
+    <Content Include="Bilder\asl16084.png" />
     <Content Include="Bilder\default.png" />
+    <Content Include="Bilder\hau16184.png" />
+    <Content Include="Bilder\ili16202.png" />
+    <Content Include="Bilder\kac16215.png" />
+    <Content Include="Bilder\ker15450.png" />
+    <Content Include="Bilder\kru16243.png" />
+    <Content Include="Bilder\sal15532.png" />
+    <Content Include="Bilder\sta16367.png" />
+    <Content Include="Bilder\tob16392.png" />
+    <Content Include="Bilder\von16678.png" />
     <Content Include="Eikon.png" />
     <Content Include="EikonesDatenbank.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
